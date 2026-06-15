@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 
 const VolunteerRegistration = () => {
     const [formData, setFormData] = useState({
@@ -18,8 +18,8 @@ const VolunteerRegistration = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/volunteers', formData);
-            setMessage('Registration successful! Your application is pending approval.');
+            const response = await api.post('/volunteers', formData);
+            setMessage(response.data.message || 'Registration successful! Your application is pending approval.');
             setFormData({ name: '', email: '', phone: '', skills: '', role: '' });
         } catch (error) {
             setMessage(error.response?.data?.message || 'Registration failed. Email might already be registered.');

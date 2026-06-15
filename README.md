@@ -156,6 +156,28 @@ npm run dev
 
 ---
 
+## Deployment (Render)
+
+### 1. Backend (Web Service)
+- **Build Command:** `npm install`
+- **Start Command:** `node server.js`
+- **Env Vars:** 
+  - `MONGO_URI`: Your MongoDB Atlas string
+  - `JWT_SECRET`: A random secure string
+  - `PORT`: 10000 (Render default)
+
+### 2. Frontend (Static Site)
+- **Build Command:** `npm run build`
+- **Publish Directory:** `dist`
+- **Env Vars:**
+  - `VITE_API_URL`: The URL of your deployed Backend Service.
+
+**Note:** In your `frontend/src/api.js`, ensure you use `import.meta.env.VITE_API_URL` as the baseURL.
+
+---
+
+
+
 ## Future Improvements
 
 - Search volunteers
