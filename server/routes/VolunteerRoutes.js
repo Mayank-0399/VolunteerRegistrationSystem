@@ -15,10 +15,10 @@ router.post("/", async (req, res) => {
             skills,
             availability,
             address,
-            preferredRole
+            role
         } = req.body;
 
-        if (!name || !email || !phone || !age) {
+        if (!name || !email || !phone) {
             return res.status(400).json({
                 success: false,
                 message: "Please fill all required fields"
