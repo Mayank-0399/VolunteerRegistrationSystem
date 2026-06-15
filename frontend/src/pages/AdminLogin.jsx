@@ -14,7 +14,7 @@ function AdminLogin() {
       const response = await api.post('/admin/login', { email, password });
       localStorage.setItem('adminToken', response.data.token);
       toast.success(response.data.message);
-      navigate('/'); // Redirect to dashboard
+      navigate('/admin/dashboard'); 
     } catch (error) {
       toast.error(error.response?.data?.message || 'Login failed');
     }
