@@ -24,17 +24,16 @@ const volunteerSchema = new mongoose.Schema(
     },
 
     age: {
-      type: Number,
-      required: true
+      type: Number
     },
 
-    skills: [String],
+    skills: String,
 
     availability: String,
 
     address: String,
 
-    preferredRole: String,
+    role: String,
 
     status: {
       type: String,
