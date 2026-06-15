@@ -19,10 +19,12 @@ const VolunteerRegistration = () => {
         e.preventDefault();
         try {
             const response = await api.post('/volunteers', formData);
-            setMessage(response.data.message || 'Registration successful! Your application is pending approval.');
+            setMessage('Registration successful! Your application is pending approval.');
             setFormData({ name: '', email: '', phone: '', skills: '', role: '' });
         } catch (error) {
-            setMessage(error.response?.data?.message || 'Registration failed. Email might already be registered.');
+            console.error('Registration Error:', error);
+            const errorMsg = error.response?.data?.message || 'Registration failed. Please check your connection or try a different email.';
+            setMessage(errorMsg);
         }
     };
 

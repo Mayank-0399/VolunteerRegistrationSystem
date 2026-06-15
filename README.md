@@ -159,6 +159,7 @@ npm run dev
 ## Deployment (Render)
 
 ### 1. Backend (Web Service)
+- **Root Directory:** `server`
 - **Build Command:** `npm install`
 - **Start Command:** `node server.js`
 - **Env Vars:** 
@@ -167,6 +168,7 @@ npm run dev
   - `PORT`: 10000 (Render default)
 
 ### 2. Frontend (Static Site)
+- **Root Directory:** `frontend`
 - **Build Command:** `npm run build`
 - **Publish Directory:** `dist`
 - **Env Vars:**
