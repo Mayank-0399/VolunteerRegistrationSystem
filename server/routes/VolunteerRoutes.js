@@ -15,13 +15,13 @@ router.post("/", async (req, res) => {
             skills,
             availability,
             address,
-            role
+            preferredRole
         } = req.body;
 
-        if (!name || !email || !phone) {
+        if (!name || !email || !phone || !age) {
             return res.status(400).json({
                 success: false,
-                message: "Please fill all required fields"
+                message: "Please fill all required fields (Name, Email, Phone, Age)"
             });
         }
 
@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
         if (existingVolunteer) {
             return res.status(400).json({
                 success: false,
-                message: "Volunteer already registered"
+                message: "A volunteer with this email already exists"
             });
         }
 

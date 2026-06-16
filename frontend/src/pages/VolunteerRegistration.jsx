@@ -15,6 +15,7 @@ function VolunteerRegistration() {
     address: '',
     preferredRole: '',
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,18 +24,26 @@ function VolunteerRegistration() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
+      const ageNum = parseInt(formData.age, 10);
+      if (isNaN(ageNum)) {
+        throw new Error("Age must be a valid number");
+      }
+
       const dataToSend = {
         ...formData,
         skills: formData.skills.split(',').map(s => s.trim()).filter(s => s), // Convert to array
-        age: parseInt(formData.age, 10),
+        age: ageNum,
       };
 
       const response = await api.post('/volunteers', dataToSend);
-      toast.success(response.data.message);
-      navigate('/'); // Redirect to dashboard after registration
+      toast.success(response.data.message || 'Registration successful!');
+      navigate(-1); // Go back to the previous page (e.g. Dashboard)
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Volunteer registration failed');
+      toast.error(error.response?.data?.message || error.message || 'Volunteer registration failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,19 +89,26 @@ function VolunteerRegistration() {
           </div>
           <div className="md:col-span-2">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="preferredRole">Preferred Role</label>
-            <input type="text" id="preferredRole" name="preferredRole" value={formData.preferredRole} onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            <select id="preferredRole" name="preferredRole" value={formData.preferredRole} onChange={handleChange} required
+              className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+              <option value="">Select a role</option>
+              <option value="Mentor">Mentor</option>
+              <option value="Coordinator">Coordinator</option>
+              <option value="General Support">General Support</option>
+              <option value="Event Planning">Event Planning</option>
+            </select>
           </div>
           <div className="md:col-span-2 flex justify-between items-center mt-4">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              disabled={loading}
+              className={`${loading ? 'bg-blue-300' : 'bg-blue-500 hover:bg-blue-700'} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
             >
-              Register Volunteer
+              {loading ? 'Registering...' : 'Register Volunteer'}
             </button>
             <button
               type="button"
-              onClick={() => navigate('/')}
+              onClick={() => navigate(-1)}
               className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Cancel

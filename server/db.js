@@ -27,13 +27,13 @@ const volunteerSchema = new mongoose.Schema(
       type: Number
     },
 
-    skills: String,
+    skills: [String],
 
     availability: String,
 
     address: String,
 
-    role: String,
+    preferredRole: String,
 
     status: {
       type: String,
