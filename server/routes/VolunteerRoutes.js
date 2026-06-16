@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
         }
 
         const volunteer =
-        await Volunteer.create(req.body);
+        await Volunteer.create({ name, email, phone, age, skills, availability, address, preferredRole });
 
         res.status(201).json({
             success: true,
