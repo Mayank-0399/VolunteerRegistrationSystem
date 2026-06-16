@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { Volunteer } = require("../db"); 
-const auth = require("../middleware/authmiddleware"); 
 
 router.post("/", async (req, res) => {
 
@@ -35,8 +34,17 @@ router.post("/", async (req, res) => {
             });
         }
 
-        const volunteer =
-        await Volunteer.create({ name, email, phone, age, skills, availability, address, preferredRole });
+        const volunteer = await Volunteer.create({
+            name,
+            email,
+            phone,
+            age,
+            skills,
+            availability,
+            address,
+            preferredRole,
+            status: "Pending"
+        });
 
         res.status(201).json({
             success: true,
